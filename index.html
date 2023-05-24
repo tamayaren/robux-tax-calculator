@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script
+        src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            @apply flex flex-col justify-center items-center content-center h-screen;
+            background-color: #171717;
+        }
+        
+        p {
+            @apply text-white text-center;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .card {
+            @apply flex flex-col justify-center items-center w-9/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/4 m-2 p-4 min-h-fit transition-all ease-out duration-150 border shadow-xl my-6 px-8 py-10;
+            background-color: #121212;
+            border-color: #565656;
+        }
+
+        input {
+            background-color: rgba(0, 0, 0, 0);
+            border-color: #565656;
+        }
+
+        .summary {
+            @apply my-4 flex-col rounded-md border p-8;
+            border-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        $(document).ready(() => {
+            $("#robux").on("input", (e) => {
+                const string = e.target.value;
+
+                $(".summary").removeClass(string.length > 0 ? "hidden" : "flex");
+                $(".summary").addClass(string.length > 0 ? "flex" : "hidden");
+
+                var number = Number(string)
+                var takenResult = number * .7;
+                var usd = 0.0035 * number;
+                var upsell = number / .7
+
+                $("#result-robux").text(Math.round(takenResult).toLocaleString("en-US"));
+                $("#result-usd").text(`USD$ ${Math.round(usd).toLocaleString("en-US")}`);
+                $("#required-robux").text(Math.round(upsell).toLocaleString("en-US"));
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="card" id="main">
+        <img src="https://companieslogo.com/img/orig/RBLX_BIG.D-7104ee0f.png?t=1648060951" class="w-32"/>
+        <p class="font-bold text-md mb-4">Tax Calculator</p>
+        <p class="text-sm">Calculates the Robux you will get from earnings, and also its USD DevEx equivalent, and also the amount required to get the total.</p>
+        <div class="my-4 flex flex-row">
+            <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/e/d/f/edfae9388da4cd8496b885a8a2df613372500d9c.png" class="w-6"/>
+            <input id="robux" class="mx-2 px-2 rounded-md border min-w-0 text-white" type="number">
+        </div>
+        <div class="summary hidden">
+            <p class="text-sm mb-4 font-semibold">Given the marketplace fee is 30%, you will earn:</p>
+            <div class="flex flex-row items-center justify-center">
+                <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/e/d/f/edfae9388da4cd8496b885a8a2df613372500d9c.png" class="w-6"/>
+                <p class="text-xl font-black ml-2" id="result-robux">0</p>
+            </div>
+            <p class="text-xl font-black mt-2" id="result-usd">USD$ 0</p>
+            <p class="text-xs mb-4 mt-4">But if you want to earn that total amount of robux, you will need to sell:</p>
+            <div class="flex flex-row items-center justify-center">
+                <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/e/d/f/edfae9388da4cd8496b885a8a2df613372500d9c.png" class="w-6"/>
+                <p class="text-xl font-black ml-2" id="required-robux">0</p>
+            </div>
+        </div>
+    </div>
+    <p class="opacity-25 text-xs">Tamayaren 2023</p>
+</body>
+</html>
